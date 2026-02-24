@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tagum Spots — Group 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --espresso: #1c0d00;
+    --dark-roast: #2e1503;
+    --medium-roast: #6b3410;
+    --amber: #c9873a;
+    --gold: #e8a84e;
+    --cream: #f5ede0;
+    --light-cream: #fdf8f3;
+    --warm-white: #fffbf6;
+    --muted: #a8906e;
+    --text-main: #2e1503;
+    --text-light: #7a5c3d;
+    --card-bg: #ffffff;
+    --shadow: 0 8px 40px rgba(28,13,0,0.12);
+    --shadow-hover: 0 20px 60px rgba(28,13,0,0.22);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--light-cream);
+    color: var(--text-main);
+    overflow-x: hidden;
+    cursor: default;
+    display: grid;
+    grid-auto-rows: auto;
+  }
+  /* ...existing CSS from style.css... */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  /* ...rest of style.css content... */
+</style>
+
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="assets/hero.mp4" type="video/mp4">
+  </video>
+  <nav class="nav">
+    <span class="nav-logo">Group 5 × Tagum</span>
+    <span class="nav-badge">📍 Tagum City, Davao del Norte</span>
+  </nav>
+
+  <div class="hero-center">
+    <p class="hero-eyebrow">☕ Your Tagum Coffee Concierge</p>
+    <h1 class="hero-title">Find Your<br><em>Perfect Spot</em></h1>
+    <p class="hero-sub">curated by Group 5</p>
+    <p class="hero-desc">
+      Not just a café list — a mood-matching engine for Tagum's best spaces.
+      Whether you need Wi-Fi for six hours, a cake worth photographing,
+      or the most beautiful corner in the city, we'll find it for you.
+    </p>
+    <button class="hero-cta" onclick="document.getElementById('mood').scrollIntoView({behavior:'smooth'})">
+      Find My Spot
+      <span class="hero-cta-arrow">↓</span>
+    </button>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll to explore</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ MOOD SELECTOR ═══ -->
+<section class="mood-section" id="mood">
+  <p class="section-label">Step 1 — Choose your mood</p>
+  <h2 class="mood-heading">What brings you<br><em>out today?</em></h2>
+  <p class="mood-sub">Tap a vibe. We'll handle the rest.</p>
+
+  <div class="mood-buttons">
+    <button class="mood-btn work active" onclick="setMood('work', this)">
+      <span class="mood-icon">💻</span>
+      <div class="mood-btn-title">Focus & Productivity</div>
+      <div class="mood-btn-desc">You need fast Wi-Fi, a quiet corner, and enough outlets to survive the deadline.</div>
+      <span class="mood-pill">🎓 Student / Freelancer</span>
+    </button>
+
+    <button class="mood-btn eat" onclick="setMood('eat', this)">
+      <span class="mood-icon">🍰</span>
+      <div class="mood-btn-title">Cravings & Desserts</div>
+      <div class="mood-btn-desc">You came for the brazo de mercedes and the mango frappe — in that order.</div>
+      <span class="mood-pill">🍴 Foodie / Family</span>
+    </button>
+
+    <button class="mood-btn chill" onclick="setMood('chill', this)">
+      <span class="mood-icon">✨</span>
+      <div class="mood-btn-title">Aesthetic & Social</div>
+      <div class="mood-btn-desc">You want a backdrop that makes the whole squad look like they're in a film.</div>
+      <span class="mood-pill">📸 Date / Friends</span>
+    </button>
+  </div>
+</section>
+
+<!-- ═══ RESULTS ═══ -->
+<section class="results-section" id="results">
+  <div class="results-header">
+    <h2 class="results-title" id="results-title">Spots for <span>Focus & Productivity</span></h2>
+    <span class="results-count" id="results-count">Showing 2 curated spots</span>
+  </div>
+  <div class="cards-grid" id="cards-grid"></div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-logo">Tagum Spots</div>
+  <p>Curated with ☕ by <strong>Group 5</strong></p>
+  <p>BSIT · Tagum City, Davao del Norte · 2025</p>
+</footer>
+
+<!-- ═══ MODAL ═══ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <div class="modal-hero" id="modal-hero">
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+      <span id="modal-emoji"></span>
+    </div>
+    <div class="modal-body">
+      <p class="modal-badge" id="modal-badge"></p>
+      <h2 class="modal-name" id="modal-name"></h2>
+      <p class="modal-tagline" id="modal-tagline"></p>
+
+      <div class="modal-vibes" id="modal-vibes"></div>
+
+      <div class="modal-grid" id="modal-stats"></div>
+
+      <div class="modal-section" id="modal-menu-section">
+        <h3 class="modal-section-title">🍽️ Signature Menu</h3>
+        <ul class="menu-list" id="modal-menu"></ul>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-primary" id="modal-map-btn" onclick="">📍 Get Directions</button>
+        <button class="modal-btn modal-btn-secondary" onclick="closeModalDirect()">← Back to Results</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ────────── STATE ──────────
+
+let currentMood = 'work';
+// Embedded shop data (formerly shops.json)
+const shops = [
+  {
+    "id": 1,
+    "mood": "work",
+    "name": "Bean O' Clock",
+    "badge": "The Coder's Den",
+    "emoji": "☕",
+    "bgGradient": "linear-gradient(135deg, #1a2a4a, #2c4a7c)",
+    "tagline": "Where deadlines meet espresso shots",
+    "vibes": ["📶 Fast Wi-Fi", "🔌 Many Outlets", "🤫 Quiet Vibe", "❄️ Aircon"],
+    "mustTry": "Spanish Latte & Brazo de Mercedes",
+    "stats": [
+      { "label": "Wi-Fi Speed", "value": "50+ Mbps — smooth for Zoom & uploads" },
+      { "label": "Power Outlets", "value": "Every seat has access · bring your setup" },
+      { "label": "Noise Level", "value": "Library-quiet · background lo-fi only" },
+      { "label": "Hours", "value": "8:00 AM – 11:00 PM daily" }
+    ],
+    "menu": [
+      { "name": "Spanish Latte", "price": "₱120", "star": true },
+      { "name": "Brazo de Mercedes", "price": "₱85", "star": true },
+      { "name": "Iced Americano", "price": "₱95", "star": false },
+      { "name": "Banana Loaf", "price": "₱65", "star": false },
+      { "name": "Matcha Latte", "price": "₱130", "star": false }
+    ],
+    "mapsUrl": "https://maps.google.com/?q=Bean+O+Clock+Tagum"
+  },
+  {
+    "id": 2,
+    "mood": "work",
+    "name": "Café de Oro",
+    "badge": "The Silent Grinder",
+    "emoji": "🖥️",
+    "bgGradient": "linear-gradient(135deg, #2a3a55, #3a5580)",
+    "tagline": "Built for those who work in silence",
+    "vibes": ["📶 Wi-Fi Ready", "🔌 Charging Points", "❄️ Aircon", "🕯️ Dim Lighting"],
+    "mustTry": "Cold Brew & Cheesecake Slice",
+    "stats": [
+      { "label": "Wi-Fi Speed", "value": "30+ Mbps — reliable enough for remote work" },
+      { "label": "Power Outlets", "value": "Side walls and counter seats" },
+      { "label": "Noise Level", "value": "Calm ambient — no loud music" },
+      { "label": "Hours", "value": "9:00 AM – 10:00 PM daily" }
+    ],
+    "menu": [
+      { "name": "Cold Brew", "price": "₱115", "star": true },
+      { "name": "NY Cheesecake", "price": "₱110", "star": true },
+      { "name": "Vanilla Latte", "price": "₱125", "star": false },
+      { "name": "Avocado Toast", "price": "₱145", "star": false }
+    ],
+    "mapsUrl": "https://maps.google.com/?q=Cafe+Tagum+City"
+  },
+  {
+    "id": 3,
+    "mood": "eat",
+    "name": "Yuyu Café",
+    "badge": "The Dessert Palace",
+    "emoji": "🍮",
+    "bgGradient": "linear-gradient(135deg, #7a1a1a, #c44040)",
+    "tagline": "Tagum's sweetest obsession since forever",
+    "vibes": ["🍰 Signature Cakes", "🧋 Milktea", "👨‍👩‍👧 Family-Friendly", "❄️ Aircon"],
+    "mustTry": "Mango Graham Float & Ube Cheesecake",
+    "stats": [
+      { "label": "Dessert Freshness", "value": "Baked daily — ask staff for today's batch" },
+      { "label": "Non-Coffee Options", "value": "Milktea, Fruit Frappes, Hot Choco" },
+      { "label": "Kid Friendly", "value": "Yes — high chairs available" },
+      { "label": "Hours", "value": "10:00 AM – 9:30 PM daily" }
+    ],
+    "menu": [
+      { "name": "Mango Graham Float", "price": "₱135", "star": true },
+      { "name": "Ube Cheesecake", "price": "₱120", "star": true },
+      { "name": "Taro Milktea", "price": "₱95", "star": false },
+      { "name": "Strawberry Frappe", "price": "₱110", "star": false },
+      { "name": "Leche Flan Cake", "price": "₱155", "star": false }
+    ],
+    "mapsUrl": "https://maps.google.com/?q=Yuyu+Cafe+Tagum"
+  },
+  {
+    "id": 4,
+    "mood": "eat",
+    "name": "Dulce",
+    "badge": "The Cheesecake King",
+    "emoji": "🎂",
+    "bgGradient": "linear-gradient(135deg, #6a1a40, #a83060)",
+    "tagline": "Because some cravings deserve a crown",
+    "vibes": ["🍰 Pastry Fresh Daily", "☕ Coffee & Tea", "🎁 Takeout Boxes", "💕 Date Spot"],
+    "mustTry": "Basque Burnt Cheesecake & Caramel Milk Tea",
+    "stats": [
+      { "label": "Specialty", "value": "Basque cheesecake · whole cakes for order" },
+      { "label": "Non-Coffee Options", "value": "Herbal tea, fruit shakes, milk tea" },
+      { "label": "Takeout Ready", "value": "Yes — perfect for celebration cakes" },
+      { "label": "Hours", "value": "11:00 AM – 9:00 PM · Closed Mondays" }
+    ],
+    "menu": [
+      { "name": "Basque Burnt Cheesecake", "price": "₱145", "star": true },
+      { "name": "Caramel Milk Tea", "price": "₱105", "star": true },
+      { "name": "Croissant (Butter)", "price": "₱75", "star": false },
+      { "name": "Strawberry Shortcake", "price": "₱130", "star": false },
+      { "name": "Dirty Matcha Latte", "price": "₱135", "star": false }
+    ],
+    "mapsUrl": "https://maps.google.com/?q=Dulce+Cafe+Tagum"
+  },
+  {
+    "id": 5,
+    "mood": "chill",
+    "name": "Kurahi",
+    "badge": "The Aesthetic Anchor",
+    "emoji": "🌿",
+    "bgGradient": "linear-gradient(135deg, #1a3a2a, #2a6040)",
+    "tagline": "Industrial-green. Rattan. Perfect lighting.",
+    "vibes": ["📸 Instagrammable", "🛋️ Plush Seating", "🌿 Botanical Decor", "🔆 Natural Light"],
+    "mustTry": "Butterfly Pea Lemonade & Ube Spanish Latte",
+    "stats": [
+      { "label": "Interior Vibe", "value": "Botanical-industrial · earthy tones & rattan" },
+      { "label": "Lighting", "value": "Golden-hour windows · ring-light level bright" },
+      { "label": "Seating Comfort", "value": "Plush cushions + outdoor garden seats" },
+      { "label": "Hours", "value": "9:00 AM – 11:00 PM daily" }
+    ],
+    "menu": [
+      { "name": "Butterfly Pea Lemonade", "price": "₱130", "star": true },
+      { "name": "Ube Spanish Latte", "price": "₱145", "star": true },
+      { "name": "Mushroom Carbonara", "price": "₱225", "star": false },
+      { "name": "Club Sandwich", "price": "₱195", "star": false },
+      { "name": "Biscoff Frappe", "price": "₱160", "star": false }
+    ],
+    "mapsUrl": "https://maps.google.com/?q=Kurahi+Cafe+Tagum"
+  },
+  {
+    "id": 6,
+    "mood": "chill",
+    "name": "Mono",
+    "badge": "The Film Set",
+    "emoji": "🖤",
+    "bgGradient": "linear-gradient(135deg, #111, #2a2a2a)",
+    "tagline": "Monochrome mood. Maximum cool.",
+    "vibes": ["🖤 Dark Aesthetic", "🕯️ Candlelit Corners", "🎵 Curated Playlist", "📸 Photo Walls"],
+    "mustTry": "Black Sesame Latte & Dark Choco Mud Cake",
+    "stats": [
+      { "label": "Interior Vibe", "value": "Black & white palette · neon accents" },
+      { "label": "Lighting", "value": "Dramatic low-light — great for portrait mode" },
+      { "label": "Seating", "value": "Booth-style + bar counter for solo visits" },
+      { "label": "Hours", "value": "12:00 NN – 12:00 MN · Open late" }
+    ],
+    "menu": [
+      { "name": "Black Sesame Latte", "price": "₱150", "star": true },
+      { "name": "Dark Choco Mud Cake", "price": "₱135", "star": true },
+      { "name": "Charcoal Waffle", "price": "₱175", "star": false },
+      { "name": "Midnight Cold Brew", "price": "₱120", "star": false },
+      { "name": "Oreo Frappe", "price": "₱125", "star": false }
+    ],
+    "mapsUrl": "https://maps.google.com/?q=Mono+Cafe+Tagum"
+  }
+];
+
+const moodLabels = {
+  work: 'Focus & Productivity',
+  eat: 'Cravings & Desserts',
+  chill: 'Aesthetic & Social',
+};
+
+// ────────── Fetch Data ──────────
+async function fetchShops() {
+    renderCards('work');
+}
+
+// ────────── RENDER ──────────
+function renderCards(mood) {
+  const grid = document.getElementById('cards-grid');
+  const titleEl = document.getElementById('results-title');
+  const countEl = document.getElementById('results-count');
+
+  const filtered = shops.filter(s => s.mood === mood);
+
+  titleEl.innerHTML = `Spots for <span>${moodLabels[mood]}</span>`;
+  countEl.textContent = `Showing ${filtered.length} curated spots`;
+
+  grid.innerHTML = '';
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><span style="font-size:3rem">🔍</span><p>No spots matched. Try another mood!</p></div>`;
+    return;
+  }
+
+  filtered.forEach(shop => {
+    const card = document.createElement('div');
+    card.className = 'spot-card';
+    card.onclick = () => openModal(shop);
+
+    card.innerHTML = `
+      <div class="card-img-placeholder" style="background:${shop.bgGradient}">
+        ${shop.emoji}
+      </div>
+      <div class="card-body">
+        <span class="card-badge">⭐ ${shop.badge}</span>
+        <h3 class="card-name">${shop.name}</h3>
+        <p class="card-tagline">${shop.tagline}</p>
+        <div class="card-vibes">
+          ${shop.vibes.map(v => `<span class="vibe-tag">${v}</span>`).join('')}
+        </div>
+        <div class="card-must-try">
+          <strong>✦ Must Try</strong>
+          ${shop.mustTry}
+        </div>
+        <div class="card-actions">
+          <button class="btn-primary" onclick="event.stopPropagation(); openModal(shops.find(s=>s.id===${shop.id}))">View Details</button>
+          <button class="btn-secondary" onclick="event.stopPropagation(); window.open('${shop.mapsUrl}','_blank')">📍 Directions</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ────────── MOOD SWITCH ──────────
+function setMood(mood, btn) {
+  currentMood = mood;
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const grid = document.getElementById('cards-grid');
+  grid.style.opacity = '0';
+  grid.style.transform = 'translateY(16px)';
+  grid.style.transition = 'all 0.3s ease';
+
+  setTimeout(() => {
+    renderCards(mood);
+    grid.style.opacity = '1';
+    grid.style.transform = 'translateY(0)';
+  }, 300);
+
+  setTimeout(() => {
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+// ────────── MODAL ──────────
+function openModal(shop) {
+  const overlay = document.getElementById('modal-overlay');
+
+  document.getElementById('modal-emoji').textContent = shop.emoji;
+  document.getElementById('modal-hero').style.background = shop.bgGradient;
+  document.getElementById('modal-badge').textContent = `⭐ ${shop.badge}`;
+  document.getElementById('modal-name').textContent = shop.name;
+  document.getElementById('modal-tagline').textContent = shop.tagline;
+
+  // Vibes
+  document.getElementById('modal-vibes').innerHTML =
+    shop.vibes.map(v => `<span class="vibe-tag">${v}</span>`).join('');
+
+  // Stats
+  document.getElementById('modal-stats').innerHTML =
+    shop.stats.map(s => `
+      <div class="modal-stat">
+        <div class="modal-stat-label">${s.label}</div>
+        <div class="modal-stat-val">${s.value}</div>
+      </div>
+    `).join('');
+
+  // Menu
+  document.getElementById('modal-menu').innerHTML =
+    shop.menu.map(m => `
+      <li class="menu-item">
+        <span class="menu-item-name">${m.name}${m.star ? '<span class="menu-item-star">★</span>' : ''}</span>
+        <span class="menu-item-price">${m.price}</span>
+      </li>
+    `).join('');
+
+  // Map button
+  document.getElementById('modal-map-btn').onclick = () => window.open(shop.mapsUrl, '_blank');
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+// ────────── INIT ──────────
+renderCards('work');
+</script>
+</body>
+</html>
