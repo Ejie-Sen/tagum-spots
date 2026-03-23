@@ -820,6 +820,7 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 100px; }
 </style>
+
 </head>
 <body>
 
@@ -829,16 +830,16 @@
     <source src="Hero.mp4" type="video/mp4">
   </video>
   <nav class="nav">
-    <span class="nav-logo">Group 5 × Tagum</span>
+    <span class="nav-logo">Group 4 × Tagum</span>
     <span class="nav-badge">📍 Tagum City, Davao del Norte</span>
   </nav>
 
   <div class="hero-center">
     <p class="hero-eyebrow">☕ Your Tagum Coffee Concierge</p>
     <h1 class="hero-title">Find Your<br><em>Perfect Spot</em></h1>
-    <p class="hero-sub">curated by Group 5</p>
+    <p class="hero-sub">curated by Group 4</p>
     <p class="hero-desc">
-      Not just a café list — a mood-matching engine for Tagum's best spaces.
+      Not just a café list it's a mood-matching engine for Tagum's best spaces.
       Whether you need Wi-Fi for six hours, a cake worth photographing,
       or the most beautiful corner in the city, we'll find it for you.
     </p>
@@ -897,7 +898,7 @@
 <!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="footer-logo">Tagum Spots</div>
-  <p>Curated with ☕ by <strong style="color:var(--gold)">Group 5</strong></p>
+  <p>Curated with ☕ by <strong style="color:var(--gold)">Group 4</strong></p>
   <p style="margin-top:0.5rem; font-size:0.72rem; opacity:0.5;">BSIT · Tagum City, Davao del Norte · 2025</p>
 </footer>
 
@@ -931,316 +932,8 @@
 </div>
 
 <script>
-// ═══════════════ DATA ═══════════════
-const shops = [
-
-  // ── WORK / FOCUS ──
-  {
-    id: 1,
-    mood: 'work',
-    name: "Bean O' Clock",
-    badge: "The Coder's Den",
-    emoji: '☕',
-    bgGradient: 'linear-gradient(135deg, #1a2a4a, #2c4a7c)',
-    tagline: 'Where deadlines meet espresso shots',
-    vibes: ['📶 Fast Wi-Fi', '🔌 Many Outlets', '🤫 Quiet Vibe', '❄️ Aircon'],
-    mustTry: 'Spanish Latte & Brazo de Mercedes',
-    stats: [
-      { label: 'Wi-Fi Speed', value: '50+ Mbps — smooth for Zoom & uploads' },
-      { label: 'Power Outlets', value: 'Every seat has access · bring your setup' },
-      { label: 'Noise Level', value: 'Library-quiet · background lo-fi only' },
-      { label: 'Hours', value: '8:00 AM – 11:00 PM daily' },
-    ],
-    menu: [
-      { name: 'Spanish Latte', price: '₱120', star: true },
-      { name: 'Brazo de Mercedes', price: '₱85', star: true },
-      { name: 'Iced Americano', price: '₱95', star: false },
-      { name: 'Banana Loaf', price: '₱65', star: false },
-      { name: 'Matcha Latte', price: '₱130', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Bean+O+Clock+Tagum',
-  },
-  {
-    id: 2,
-    mood: 'work',
-    name: 'Café de Oro',
-    badge: 'The Silent Grinder',
-    emoji: '🖥️',
-    bgGradient: 'linear-gradient(135deg, #2a3a55, #3a5580)',
-    tagline: 'Built for those who work in silence',
-    vibes: ['📶 Wi-Fi Ready', '🔌 Charging Points', '❄️ Aircon', '🕯️ Dim Lighting'],
-    mustTry: 'Cold Brew & Cheesecake Slice',
-    stats: [
-      { label: 'Wi-Fi Speed', value: '30+ Mbps — reliable enough for remote work' },
-      { label: 'Power Outlets', value: 'Side walls and counter seats' },
-      { label: 'Noise Level', value: 'Calm ambient — no loud music' },
-      { label: 'Hours', value: '9:00 AM – 10:00 PM daily' },
-    ],
-    menu: [
-      { name: 'Cold Brew', price: '₱115', star: true },
-      { name: 'NY Cheesecake', price: '₱110', star: true },
-      { name: 'Vanilla Latte', price: '₱125', star: false },
-      { name: 'Avocado Toast', price: '₱145', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Cafe+Tagum+City',
-  },
-  {
-    id: 3,
-    mood: 'work',
-    name: 'The Grind House',
-    badge: 'The Remote Worker Hub',
-    emoji: '⌨️',
-    bgGradient: 'linear-gradient(135deg, #1e3050, #2d4f80)',
-    tagline: 'Serious coffee for serious people',
-    vibes: ['📶 Ultra-Fast Wi-Fi', '🔌 Standing Desk Area', '🤫 Enforced Quiet Zone', '🖨️ Printer Available'],
-    mustTry: 'Double Shot Americano & Egg Salad Sandwich',
-    stats: [
-      { label: 'Wi-Fi Speed', value: '80+ Mbps fiber · dedicated study network' },
-      { label: 'Power Outlets', value: 'Every desk seat · USB-C ports available' },
-      { label: 'Noise Level', value: 'Strict quiet policy after 2PM' },
-      { label: 'Hours', value: '7:00 AM – 10:00 PM · Mon–Sat' },
-    ],
-    menu: [
-      { name: 'Double Shot Americano', price: '₱100', star: true },
-      { name: 'Egg Salad Sandwich', price: '₱130', star: true },
-      { name: 'Cold Brew Concentrate', price: '₱125', star: false },
-      { name: 'Granola Bowl', price: '₱160', star: false },
-      { name: 'Oat Milk Flat White', price: '₱145', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Grind+House+Cafe+Tagum',
-  },
-  {
-    id: 4,
-    mood: 'work',
-    name: 'Roastlab',
-    badge: 'The Specialty Bean Lab',
-    emoji: '🔬',
-    bgGradient: 'linear-gradient(135deg, #0f2540, #1a4070)',
-    tagline: 'Single-origin beans. Zero distractions.',
-    vibes: ['📶 50Mbps Wi-Fi', '🔌 Outlet-Per-Seat', '☕ Specialty Coffee', '📚 Study Tables'],
-    mustTry: 'Pour-Over Ethiopian & Almond Croissant',
-    stats: [
-      { label: 'Wi-Fi Speed', value: '50 Mbps · password reset every 4 hrs' },
-      { label: 'Power Outlets', value: 'Dedicated plug per seat at long tables' },
-      { label: 'Noise Level', value: 'Soft jazz · no phone calls at tables' },
-      { label: 'Hours', value: '8:00 AM – 9:00 PM · Closed Sundays' },
-    ],
-    menu: [
-      { name: 'Pour-Over Ethiopian', price: '₱175', star: true },
-      { name: 'Almond Croissant', price: '₱95', star: true },
-      { name: 'Cortado', price: '₱130', star: false },
-      { name: 'Overnight Oats', price: '₱150', star: false },
-      { name: 'Filter Drip Coffee', price: '₱85', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Roastlab+Tagum',
-  },
-
-  // ── EAT / DESSERTS ──
-  {
-    id: 5,
-    mood: 'eat',
-    name: 'Yuyu Café',
-    badge: 'The Dessert Palace',
-    emoji: '🍮',
-    bgGradient: 'linear-gradient(135deg, #7a1a1a, #c44040)',
-    tagline: "Tagum's sweetest obsession since forever",
-    vibes: ['🍰 Signature Cakes', '🧋 Milktea', '👨‍👩‍👧 Family-Friendly', '❄️ Aircon'],
-    mustTry: 'Mango Graham Float & Ube Cheesecake',
-    stats: [
-      { label: 'Dessert Freshness', value: "Baked daily — ask staff for today's batch" },
-      { label: 'Non-Coffee Options', value: 'Milktea, Fruit Frappes, Hot Choco' },
-      { label: 'Kid Friendly', value: 'Yes — high chairs available' },
-      { label: 'Hours', value: '10:00 AM – 9:30 PM daily' },
-    ],
-    menu: [
-      { name: 'Mango Graham Float', price: '₱135', star: true },
-      { name: 'Ube Cheesecake', price: '₱120', star: true },
-      { name: 'Taro Milktea', price: '₱95', star: false },
-      { name: 'Strawberry Frappe', price: '₱110', star: false },
-      { name: 'Leche Flan Cake', price: '₱155', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Yuyu+Cafe+Tagum',
-  },
-  {
-    id: 6,
-    mood: 'eat',
-    name: 'Dulce',
-    badge: 'The Cheesecake King',
-    emoji: '🎂',
-    bgGradient: 'linear-gradient(135deg, #6a1a40, #a83060)',
-    tagline: 'Because some cravings deserve a crown',
-    vibes: ['🍰 Pastry Fresh Daily', '☕ Coffee & Tea', '🎁 Takeout Boxes', '💕 Date Spot'],
-    mustTry: 'Basque Burnt Cheesecake & Caramel Milk Tea',
-    stats: [
-      { label: 'Specialty', value: 'Basque cheesecake · whole cakes for order' },
-      { label: 'Non-Coffee Options', value: 'Herbal tea, fruit shakes, milk tea' },
-      { label: 'Takeout Ready', value: 'Yes — perfect for celebration cakes' },
-      { label: 'Hours', value: '11:00 AM – 9:00 PM · Closed Mondays' },
-    ],
-    menu: [
-      { name: 'Basque Burnt Cheesecake', price: '₱145', star: true },
-      { name: 'Caramel Milk Tea', price: '₱105', star: true },
-      { name: 'Croissant (Butter)', price: '₱75', star: false },
-      { name: 'Strawberry Shortcake', price: '₱130', star: false },
-      { name: 'Dirty Matcha Latte', price: '₱135', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Dulce+Cafe+Tagum',
-  },
-  {
-    id: 7,
-    mood: 'eat',
-    name: 'Sugar & Bloom',
-    badge: 'The Pastry Garden',
-    emoji: '🌸',
-    bgGradient: 'linear-gradient(135deg, #7a3060, #c05090)',
-    tagline: 'Floral, fresh, and frosted to perfection',
-    vibes: ['🌸 Floral Pastries', '🍓 Seasonal Flavors', '🎁 Gift Boxes', '☕ Coffee & Tea'],
-    mustTry: 'Rose Milk Cake & Strawberry Danish',
-    stats: [
-      { label: 'Specialty', value: 'Floral-themed cakes & seasonal pastries' },
-      { label: 'Non-Coffee Options', value: 'Rose latte, fruit teas, berry smoothies' },
-      { label: 'Takeout Ready', value: 'Gift boxes available · custom orders open' },
-      { label: 'Hours', value: '10:00 AM – 8:30 PM · Tue–Sun' },
-    ],
-    menu: [
-      { name: 'Rose Milk Cake', price: '₱160', star: true },
-      { name: 'Strawberry Danish', price: '₱90', star: true },
-      { name: 'Lavender Latte', price: '₱140', star: false },
-      { name: 'Blueberry Muffin', price: '₱70', star: false },
-      { name: 'Peach Iced Tea', price: '₱95', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Sugar+Bloom+Cafe+Tagum',
-  },
-  {
-    id: 8,
-    mood: 'eat',
-    name: 'Crumble & Co.',
-    badge: 'The Cookie Vault',
-    emoji: '🍪',
-    bgGradient: 'linear-gradient(135deg, #8b3a10, #cc6020)',
-    tagline: 'Warm cookies. Cold milk. No regrets.',
-    vibes: ['🍪 Fresh-Baked Daily', '🥛 Milk Pairings', '😌 Homey Atmosphere', '🧁 Cupcakes Too'],
-    mustTry: 'Triple Choco Chunky Cookie & Cold Fresh Milk',
-    stats: [
-      { label: 'Specialty', value: 'Giant cookies baked every 2 hours' },
-      { label: 'Non-Coffee Options', value: 'Fresh milk, hot choco, milkshakes' },
-      { label: 'Family Friendly', value: 'Yes — kids eat free on Saturdays' },
-      { label: 'Hours', value: '9:00 AM – 9:00 PM daily' },
-    ],
-    menu: [
-      { name: 'Triple Choco Chunky Cookie', price: '₱85', star: true },
-      { name: 'Cold Fresh Milk (500ml)', price: '₱75', star: true },
-      { name: 'Red Velvet Cupcake', price: '₱80', star: false },
-      { name: 'Peanut Butter Cookie', price: '₱75', star: false },
-      { name: 'Classic Chocolate Milk', price: '₱95', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Crumble+Co+Tagum',
-  },
-
-  // ── CHILL / AESTHETIC ──
-  {
-    id: 9,
-    mood: 'chill',
-    name: 'Kurahi',
-    badge: 'The Aesthetic Anchor',
-    emoji: '🌿',
-    bgGradient: 'linear-gradient(135deg, #1a3a2a, #2a6040)',
-    tagline: 'Industrial-green. Rattan. Perfect lighting.',
-    vibes: ['📸 Instagrammable', '🛋️ Plush Seating', '🌿 Botanical Decor', '🔆 Natural Light'],
-    mustTry: 'Butterfly Pea Lemonade & Ube Spanish Latte',
-    stats: [
-      { label: 'Interior Vibe', value: 'Botanical-industrial · earthy tones & rattan' },
-      { label: 'Lighting', value: 'Golden-hour windows · ring-light level bright' },
-      { label: 'Seating Comfort', value: 'Plush cushions + outdoor garden seats' },
-      { label: 'Hours', value: '9:00 AM – 11:00 PM daily' },
-    ],
-    menu: [
-      { name: 'Butterfly Pea Lemonade', price: '₱130', star: true },
-      { name: 'Ube Spanish Latte', price: '₱145', star: true },
-      { name: 'Mushroom Carbonara', price: '₱225', star: false },
-      { name: 'Club Sandwich', price: '₱195', star: false },
-      { name: 'Biscoff Frappe', price: '₱160', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Kurahi+Cafe+Tagum',
-  },
-  {
-    id: 10,
-    mood: 'chill',
-    name: 'Mono',
-    badge: 'The Film Set',
-    emoji: '🖤',
-    bgGradient: 'linear-gradient(135deg, #111, #2a2a2a)',
-    tagline: 'Monochrome mood. Maximum cool.',
-    vibes: ['🖤 Dark Aesthetic', '🕯️ Candlelit Corners', '🎵 Curated Playlist', '📸 Photo Walls'],
-    mustTry: 'Black Sesame Latte & Dark Choco Mud Cake',
-    stats: [
-      { label: 'Interior Vibe', value: 'Black & white palette · neon accents' },
-      { label: 'Lighting', value: 'Dramatic low-light — great for portrait mode' },
-      { label: 'Seating', value: 'Booth-style + bar counter for solo visits' },
-      { label: 'Hours', value: '12:00 NN – 12:00 MN · Open late' },
-    ],
-    menu: [
-      { name: 'Black Sesame Latte', price: '₱150', star: true },
-      { name: 'Dark Choco Mud Cake', price: '₱135', star: true },
-      { name: 'Charcoal Waffle', price: '₱175', star: false },
-      { name: 'Midnight Cold Brew', price: '₱120', star: false },
-      { name: 'Oreo Frappe', price: '₱125', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Mono+Cafe+Tagum',
-  },
-  {
-    id: 11,
-    mood: 'chill',
-    name: 'Casa Miel',
-    badge: 'The Cozy Hideout',
-    emoji: '🏡',
-    bgGradient: 'linear-gradient(135deg, #5a3010, #9a5828)',
-    tagline: 'Like your lola\'s house — but with lattes',
-    vibes: ['🏡 Homey Interiors', '🛋️ Bean Bags', '🕯️ Warm Lighting', '🎶 Chill Playlist'],
-    mustTry: 'Honey Cinnamon Latte & Bibingka Waffles',
-    stats: [
-      { label: 'Interior Vibe', value: 'Vintage Filipino home · capiz shells & wood' },
-      { label: 'Lighting', value: 'Warm amber Edison bulbs throughout' },
-      { label: 'Seating Comfort', value: 'Bean bags, rocking chairs & hammocks' },
-      { label: 'Hours', value: '10:00 AM – 10:00 PM daily' },
-    ],
-    menu: [
-      { name: 'Honey Cinnamon Latte', price: '₱135', star: true },
-      { name: 'Bibingka Waffle', price: '₱120', star: true },
-      { name: 'Salabat Ginger Tea', price: '₱75', star: false },
-      { name: 'Champorado Frappe', price: '₱140', star: false },
-      { name: 'Pandan Cheesecake', price: '₱145', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Casa+Miel+Cafe+Tagum',
-  },
-  {
-    id: 12,
-    mood: 'chill',
-    name: 'Lumière',
-    badge: 'The Golden Hour Spot',
-    emoji: '🌅',
-    bgGradient: 'linear-gradient(135deg, #7a4a10, #d4843a)',
-    tagline: 'Every seat is a photo op waiting to happen',
-    vibes: ['🌅 Floor-to-Ceiling Windows', '🪞 Mirror Walls', '🌼 Fresh Florals Weekly', '📸 Tripod-Friendly'],
-    mustTry: 'Golden Turmeric Latte & Crème Brûlée',
-    stats: [
-      { label: 'Interior Vibe', value: 'French-Tagalog fusion · gold & white palette' },
-      { label: 'Lighting', value: 'Natural skylight + ring-light ceiling panels' },
-      { label: 'Seating', value: 'Velvet chairs · reserved couple seats by window' },
-      { label: 'Hours', value: '10:00 AM – 11:00 PM · Fri–Sun until 12MN' },
-    ],
-    menu: [
-      { name: 'Golden Turmeric Latte', price: '₱155', star: true },
-      { name: 'Crème Brûlée', price: '₱165', star: true },
-      { name: 'Strawberry Rose Frappe', price: '₱150', star: false },
-      { name: 'Brioche French Toast', price: '₱195', star: false },
-      { name: 'Earl Grey Milk Tea', price: '₱115', star: false },
-    ],
-    mapsUrl: 'https://maps.google.com/?q=Lumiere+Cafe+Tagum',
-  },
-];
-
-// ═══════════════ STATE ═══════════════
+// ═══════════════ STATE (The Single Source of Truth) ═══════════════
+let shops = []; // Start empty. The backend will fill this.
 let currentMood = 'work';
 
 const moodLabels = {
@@ -1249,12 +942,37 @@ const moodLabels = {
   chill: 'Aesthetic & Social',
 };
 
+// ═══════════════ DATA FETCHING ═══════════════
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const response = await fetch('http://localhost:3000/api/shops');
+        
+        if (!response.ok) throw new Error('Network response was not ok');
+        
+        // 1. Overwrite our empty array with the real database data
+        shops = await response.json(); 
+        console.log("Data safely loaded into state:", shops);
+        
+        // 2. ONLY render the cards AFTER the data has successfully arrived
+        renderCards('work'); 
+        
+    } catch (error) {
+        console.error("Failed to fetch shops:", error);
+        document.getElementById('cards-grid').innerHTML = `
+            <div class="empty-state">
+                <p>⚠️ Failed to load database. Is the server running?</p>
+            </div>
+        `;
+    }
+});
+
 // ═══════════════ RENDER ═══════════════
 function renderCards(mood) {
   const grid = document.getElementById('cards-grid');
   const titleEl = document.getElementById('results-title');
   const countEl = document.getElementById('results-count');
 
+  // Filter based on our newly populated global 'shops' array
   const filtered = shops.filter(s => s.mood === mood);
 
   titleEl.innerHTML = `Spots for <span>${moodLabels[mood]}</span>`;
@@ -1270,26 +988,30 @@ function renderCards(mood) {
   filtered.forEach(shop => {
     const card = document.createElement('div');
     card.className = 'spot-card';
-    card.onclick = () => openModal(shop);
+    card.onclick = () => openModal(shop.id);
+
+    // DEFENSIVE RENDERING: We use (shop.vibes || []) because your 
+    // basic backend query isn't joining the vibes table yet!
+    const safeVibes = shop.vibes || [];
 
     card.innerHTML = `
-      <div class="card-img-placeholder" style="background:${shop.bgGradient}">
-        ${shop.emoji}
+      <div class="card-img-placeholder" style="background:${shop.bg_gradient || shop.bgGradient || '#333'}">
+        ${shop.emoji || '📍'}
       </div>
       <div class="card-body">
-        <span class="card-badge">⭐ ${shop.badge}</span>
+        <span class="card-badge">⭐ ${shop.badge || 'New Spot'}</span>
         <h3 class="card-name">${shop.name}</h3>
-        <p class="card-tagline">${shop.tagline}</p>
+        <p class="card-tagline">${shop.tagline || ''}</p>
         <div class="card-vibes">
-          ${shop.vibes.map(v => `<span class="vibe-tag">${v}</span>`).join('')}
+          ${safeVibes.map(v => `<span class="vibe-tag">${v}</span>`).join('')}
         </div>
         <div class="card-must-try">
           <strong>✦ Must Try</strong>
-          ${shop.mustTry}
+          ${shop.must_try || shop.mustTry || 'Ask the barista!'}
         </div>
         <div class="card-actions">
-          <button class="btn-primary" onclick="event.stopPropagation(); openModal(shops.find(s=>s.id===${shop.id}))">View Details</button>
-          <button class="btn-secondary" onclick="event.stopPropagation(); window.open('${shop.mapsUrl}','_blank')">📍 Directions</button>
+          <button class="btn-primary" onclick="event.stopPropagation(); openModal(${shop.id})">View Details</button>
+          <button class="btn-secondary" onclick="event.stopPropagation(); window.open('${shop.maps_url || shop.mapsUrl}','_blank')">📍 Directions</button>
         </div>
       </div>
     `;
@@ -1313,46 +1035,47 @@ function setMood(mood, btn) {
     grid.style.opacity = '1';
     grid.style.transform = 'translateY(0)';
   }, 300);
-
-  setTimeout(() => {
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
 }
 
 // ═══════════════ MODAL ═══════════════
-function openModal(shop) {
+function openModal(shopId) {
+  // Find the full shop object from our state using the ID
+  const shop = shops.find(s => s.id === shopId);
+  if (!shop) return;
+
   const overlay = document.getElementById('modal-overlay');
 
-  document.getElementById('modal-emoji').textContent = shop.emoji;
-  document.getElementById('modal-hero').style.background = shop.bgGradient;
+  document.getElementById('modal-emoji').textContent = shop.emoji || '📍';
+  document.getElementById('modal-hero').style.background = shop.bg_gradient || shop.bgGradient || '#333';
   document.getElementById('modal-badge').textContent = `⭐ ${shop.badge}`;
   document.getElementById('modal-name').textContent = shop.name;
   document.getElementById('modal-tagline').textContent = shop.tagline;
 
-  // Vibes
-  document.getElementById('modal-vibes').innerHTML =
-    shop.vibes.map(v => `<span class="vibe-tag">${v}</span>`).join('');
+  // Defensive rendering for arrays that might not exist yet from the DB
+  const safeVibes = shop.vibes || [];
+  const safeStats = shop.stats || [];
+  const safeMenu = shop.menu || [];
 
-  // Stats
+  document.getElementById('modal-vibes').innerHTML =
+    safeVibes.map(v => `<span class="vibe-tag">${v}</span>`).join('');
+
   document.getElementById('modal-stats').innerHTML =
-    shop.stats.map(s => `
+    safeStats.map(s => `
       <div class="modal-stat">
         <div class="modal-stat-label">${s.label}</div>
         <div class="modal-stat-val">${s.value}</div>
       </div>
     `).join('');
 
-  // Menu
   document.getElementById('modal-menu').innerHTML =
-    shop.menu.map(m => `
+    safeMenu.map(m => `
       <li class="menu-item">
         <span class="menu-item-name">${m.name}${m.star ? '<span class="menu-item-star">★</span>' : ''}</span>
         <span class="menu-item-price">${m.price}</span>
       </li>
     `).join('');
 
-  // Map button
-  document.getElementById('modal-map-btn').onclick = () => window.open(shop.mapsUrl, '_blank');
+  document.getElementById('modal-map-btn').onclick = () => window.open(shop.maps_url || shop.mapsUrl, '_blank');
 
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1369,8 +1092,8 @@ function closeModal(e) {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
 
-// ═══════════════ INIT ═══════════════
-renderCards('work');
+// NOTE: I removed the renderCards('work'); from the very bottom! 
+// It is now safely inside the fetch block.
 </script>
 </body>
 </html>
