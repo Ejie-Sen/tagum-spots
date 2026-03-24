@@ -18,6 +18,32 @@ app.get('/api/shops', async (req, res) => {
                 (SELECT GROUP_CONCAT(CONCAT(item_name, '::', price, '::', is_starred) SEPARATOR '||') FROM menu_items WHERE shop_id = s.id) AS menu_raw
             FROM shops s;
         `;
+
+// POST: Execute new shop injection
+app.post('/api/shops', async (req, res) => {
+  try {
+    const { mood, name, badge, emoji, bgGradient, tagline, mustTry, mapsUrl } = req.body;
+    
+    // Validate required fields to prevent null crashes
+    if (!name || !mood || !tagline) {
+      return res.status(400).json({ success: false, error: 'Missing required fields' });
+    }
+
+    // Explicitly mapping React camelCase variables back to MySQL snake_case columns
+    // The '?' placeholders protect your database from SQL Injection attacks
+    const query = `
+      INSERT INTO shops (mood, name, badge, emoji, bg_gradient, tagline, must_try, maps_url)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    
+    const [result] = await db.query(query, [mood, name, badge, emoji, bgGradient, tagline, mustTry, mapsUrl]);
+    
+    res.status(201).json({ success: true, newId: result.insertId });
+  } catch (error) {
+    console.error("Database write failed:", error);
+    res.status(500).json({ success: false, error: 'Failed to write to database' });
+  }
+});
         
         const [rows] = await db.query(query);
 

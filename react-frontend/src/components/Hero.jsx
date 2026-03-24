@@ -16,7 +16,7 @@ function Hero() {
       </nav>
 
       <div className="hero-center">
-        <p className="hero-eyebrow">☕ Your Tagum Coffee Concierge</p>
+        <p className="hero-eyebrow">☕ Your Tagum Locals Coffee</p>
         <h1 className="hero-title">Find Your<br/><em>Perfect Spot</em></h1>
         <p className="hero-sub">curated by Group 4</p>
         <p className="hero-desc">
