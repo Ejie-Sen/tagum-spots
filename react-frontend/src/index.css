@@ -810,3 +810,64 @@
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 100px; }
+
+  /* =========================================
+   MOBILE RESPONSIVE OVERRIDE (MAX 768px)
+   ========================================= */
+@media screen and (max-width: 768px) {
+  /* 1. Collapse the Grid */
+  .cards-grid {
+    grid-template-columns: 1fr !important; /* Forces 1 column */
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  /* 2. Contain the Cards */
+  .spot-card {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* 3. Scale down typography and spacing */
+  .results-section {
+    padding: 2rem 1rem;
+  }
+  
+  .results-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .results-count {
+    display: block;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  /* 4. Fix Modal Overflow (Assuming standard modal class) */
+  .modal-content {
+    width: 95% !important;
+    margin: 5% auto !important;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 1.5rem;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE OVERRIDE (MAX 480px)
+   ========================================= */
+@media screen and (max-width: 480px) {
+  .card-name {
+    font-size: 1.25rem;
+  }
+  
+  .card-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%; /* Full width buttons for fat fingers */
+  }
+}
