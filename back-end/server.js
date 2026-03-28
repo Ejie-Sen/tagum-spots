@@ -1,42 +1,56 @@
 const express = require('express');
+const mysql = require('mysql2/promise');
 const cors = require('cors');
-const db = require('./db'); 
-const { parseShopData } = require('./utils/dataParsers'); // Importing the tool you just created
+require('dotenv').config();
 
 const app = express();
+
+// Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // Essential: This allows Node to read the JSON tags from React
 
+// Upgraded Database Connection (Cloud & SSL Ready)
+const db = mysql.createPool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: {
+    rejectUnauthorized: false // Required to establish the SSL handshake with Aiven
+  }
+});
+
+// 1. GET: Fetch all shops (Existing Route)
 app.get('/api/shops', async (req, res) => {
-    try {
-        // The massive string-smash query for ALL shops
-        const query = `
-            SELECT 
-                s.id, s.mood, s.name, s.badge, s.emoji, s.bg_gradient, s.tagline, s.must_try, s.maps_url,
-                (SELECT GROUP_CONCAT(vibe SEPARATOR '||') FROM shop_vibes WHERE shop_id = s.id) AS vibes_raw,
-                (SELECT GROUP_CONCAT(CONCAT(label, '::', stat_value) SEPARATOR '||') FROM shop_stats WHERE shop_id = s.id) AS stats_raw,
-                (SELECT GROUP_CONCAT(CONCAT(item_name, '::', price, '::', is_starred) SEPARATOR '||') FROM menu_items WHERE shop_id = s.id) AS menu_raw
-            FROM shops s;
-        `;
+  try {
+    const [rows] = await db.query('SELECT * FROM shops');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
-// POST: Execute new shop injection
+// 2. POST: Execute new shop injection (The Upgraded Route)
 app.post('/api/shops', async (req, res) => {
   try {
-    const { mood, name, badge, emoji, bgGradient, tagline, mustTry, mapsUrl } = req.body;
+    // INJECTED: image_url added to the extracted body parameters
+    const { mood, name, badge, emoji, bgGradient, image_url, tagline, mustTry, mapsUrl, tags } = req.body;
     
-    // Validate required fields to prevent null crashes
     if (!name || !mood || !tagline) {
       return res.status(400).json({ success: false, error: 'Missing required fields' });
     }
 
-    // Explicitly mapping React camelCase variables back to MySQL snake_case columns
-    // The '?' placeholders protect your database from SQL Injection attacks
+    const tagsJson = JSON.stringify(tags || []);
+
+    // INJECTED: image_url added to the columns and an extra '?' added to VALUES
     const query = `
-      INSERT INTO shops (mood, name, badge, emoji, bg_gradient, tagline, must_try, maps_url)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO shops (mood, name, badge, emoji, bg_gradient, image_url, tagline, must_try, maps_url, tags)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     
-    const [result] = await db.query(query, [mood, name, badge, emoji, bgGradient, tagline, mustTry, mapsUrl]);
+    // INJECTED: image_url added to the execution array in the exact same order
+    const [result] = await db.query(query, [mood, name, badge, emoji, bgGradient, image_url, tagline, mustTry, mapsUrl, tagsJson]);
     
     res.status(201).json({ success: true, newId: result.insertId });
   } catch (error) {
@@ -44,22 +58,8 @@ app.post('/api/shops', async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to write to database' });
   }
 });
-        
-        const [rows] = await db.query(query);
-
-        // Map through every single row from the database and push it through your parser
-        const cleanData = rows.map(row => parseShopData(row));
-
-        // Send the perfectly formatted payload to your frontend
-        res.json(cleanData);
-        
-    } catch (error) {
-        console.error("Database Query Failed:", error);
-        res.status(500).json({ message: "Database failure" });
-    }
-});
 
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
