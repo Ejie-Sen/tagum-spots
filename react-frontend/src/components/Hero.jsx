@@ -28,29 +28,16 @@ function Hero({ searchQuery, setSearchQuery }) {
         </p>
         
         {/* --- SEARCH ENGINE UI --- */}
-        <div style={{ 
-          display: 'flex', width: '100%', maxWidth: '500px', marginBottom: '2rem', 
-          background: 'rgba(255,255,255,0.1)', padding: '0.4rem', borderRadius: '100px', 
-          border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)',
-          opacity: 0, animation: 'fadeUp 0.9s ease 0.8s forwards' 
-        }}>
-          <span style={{ padding: '0 1.2rem', display: 'flex', alignItems: 'center', fontSize: '1.2rem', opacity: 0.8 }}></span>
+        <div className="search-container">
           <input 
             type="text" 
+            className="search-input"
             placeholder="Search a specific café or vibe..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && executeSearch()}
-            style={{ flex: 1, background: 'transparent', border: 'none', color: 'white', outline: 'none', fontSize: '1rem' }}
           />
-          <button 
-            onClick={executeSearch}
-            style={{ 
-              background: 'var(--amber)', color: 'var(--espresso)', border: 'none', 
-              padding: '0.8rem 1.8rem', borderRadius: '100px', fontWeight: 'bold', 
-              cursor: 'pointer', transition: 'all 0.3s' 
-            }}
-          >
+          <button className="search-btn" onClick={executeSearch}>
             Search
           </button>
         </div>
